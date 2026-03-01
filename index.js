@@ -8,10 +8,11 @@ const dismissButton = document.getElementById("dismiss__button");
 const dismissMessageButton = document.getElementById("dismiss__message");
 const cardContainer = document.getElementById("card__container");
 
-/* Helper function to clear error state */
+/* Helper function to clear error state and allow user to retry subscription */
 const clearError = () => {
   input.setCustomValidity("");
   input.style.backgroundColor = "";
+  input.style.color = "";
   errorMessage.style.display = "none";
 };
 
@@ -25,6 +26,7 @@ const handleSubmit = (e) => {
     input.style.color = "var(--error-message-color)";
     input.style.backgroundColor = "var(--input-error-background-color)";
     errorMessage.style.display = "inline";
+    input.focus(); /* Focus the input field to guide the user to correct the error */
     return;
   }
   clearError();
@@ -41,16 +43,14 @@ const handleSubmit = (e) => {
 };
 
 const handleInput = (e) => {
-  if (input.validity.valid) {
-    clearError();
-  }
+  clearError();
 };
 
 /*Event listeners for form submission, input changes and dismissing the success message on second click */
 
 form.addEventListener("submit", handleSubmit);
 input.addEventListener("input", handleInput);
-dismissMessageButton.addEventListener("click", () => { 
+dismissMessageButton.addEventListener("click", () => {
   const successMessage = document.getElementById("success__message__hidden");
   successMessage.style.display = "none";
   mobileSuccessBackground.classList.remove("mobile__success__background");
